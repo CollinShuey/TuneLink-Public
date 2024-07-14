@@ -4,27 +4,29 @@ Social Media a where users share one song of their choice per day.
 
 ## Description
 
-An in-depth paragraph about your project and overview of use.
+TuneLink is an innovative web application developed using Django, designed to provide seamless connectivity and functionality. This Django app is connected with a PostgreSQL database to securely store and manage models created by Django, including Users, Profiles, and Posts. It leverages the Spotify Developer API to fetch accurate song and artist data whenever a user makes a post. It also uses JavaScript to create asynchronous functions that send data to the backend without requiring a full page refresh. To see all technologies used see more in the Built With section.
+
+TunkLink is hosted on a cloud web hosting service called Render. Please note I am using the free version of their web instance and database so things may take a little while to load.
 
 ### Built With
 
 This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
-* [![Next][Next.js]][[Next-url](https://nextjs.org/)]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
+* Django
+* Javascript
+* HTML/CSS/BOOTSTRAP
+* Spotify Developer API
+* AJAX/Jquery
+* PostgreSQL
+* Whitenoise
+* Hosted on Render
 
 ## Getting Started
 
 ### Dependencies
 
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-* ex. Windows 10
+See requirements.txt
+pip install everything there
 
 ### Installing
 
@@ -48,28 +50,7 @@ command to run if program contains helper info
 
 ## Authors
 
-Contributors names and contact info
+ex. Collin Shuey  
+ex. [@CollinShuey](https://twitter.com/dompizzie)
 
-ex. Dominique Pizzie  
-ex. [@DomPizzie](https://twitter.com/dompizzie)
 
-## Version History
-
-* 0.2
-    * Various bug fixes and optimizations
-    * See [commit change]() or See [release history]()
-* 0.1
-    * Initial Release
-
-## License
-
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
-
-## Acknowledgments
-
-Inspiration, code snippets, etc.
-* [awesome-readme](https://github.com/matiassingers/awesome-readme)
-* [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-* [dbader](https://github.com/dbader/readme-template)
-* [zenorocha](https://gist.github.com/zenorocha/4526327)
-* [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
