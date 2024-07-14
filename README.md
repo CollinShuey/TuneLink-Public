@@ -1,6 +1,6 @@
 # Project Title
 
-Simple overview of use/purpose.
+Social Media a where users share one song of their choice per day.
 
 ## Description
 
@@ -10,7 +10,7 @@ An in-depth paragraph about your project and overview of use.
 
 This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
-* [![Next][Next.js]][Next-url]
+* [![Next][Next.js]][[Next-url](https://nextjs.org/)]
 * [![React][React.js]][React-url]
 * [![Vue][Vue.js]][Vue-url]
 * [![Angular][Angular.io]][Angular-url]
