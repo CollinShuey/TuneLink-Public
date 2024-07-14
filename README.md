@@ -1,12 +1,14 @@
 # Project Title
 
-Social Media a where users share one song of their choice per day.
+Social Media app where users share one song of their choice per day.
 
 ## Description
 
 TuneLink is an innovative web application developed using Django, designed to provide seamless connectivity and functionality. This Django app is connected with a PostgreSQL database to securely store and manage models created by Django, including Users, Profiles, and Posts. It leverages the Spotify Developer API to fetch accurate song and artist data whenever a user makes a post. It also uses JavaScript to create asynchronous functions that send data to the backend without requiring a full page refresh. To see all technologies used see more in the Built With section.
 
 TunkLink is hosted on a cloud web hosting service called Render. Please note I am using the free version of their web instance and database so things may take a little while to load.
+
+[TuneLink](https://TuneLink.onrender.com)
 
 ### Built With
 
@@ -60,7 +62,7 @@ e.preventDefault() is what prevents the webpage from refreshing. As you can see 
 
 ## Authors
 
-ex. Collin Shuey  
-ex. [@CollinShuey](https://github.com/CollinShuey)
+
+[@CollinShuey](https://github.com/CollinShuey)
 
 
