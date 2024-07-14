@@ -1,0 +1,5 @@
+.venv/
+tunelink/db.sqlite3
+tunelink/core/__pycache__/
+tunelink/core/migrations
+tunelink/core/media/

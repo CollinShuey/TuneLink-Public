@@ -1,0 +1,303 @@
+{% extends "base.html" %}
+
+
+{% block title %}{{user.username}}'s Profile - TuneLink{% endblock %}
+
+{% block head %}
+
+    <style>
+        .card {
+            width:70vw;
+        }
+        h3 {
+            font-size:26px;
+        }
+        .button {
+            font-size: 16px;
+        }
+        .profile-img-container {
+            width: 60px;
+            height:60px;
+            margin-right:2vw;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .profile-img {
+            width:100%;
+            height: 100%;
+            box-shadow:0 0 10px rgba(0,0,0,0.5);
+            object-fit:cover;
+            border:3px solid #fff;
+            flex:1;
+        }
+        .bio-container {
+            margin-left:1vw;
+            max-width:60vw;
+            flex:1;
+        }
+        .card-body {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;            
+
+        }
+        .post-pic-name-snippit {
+            display:flex;
+            justify-content: space-between;
+            align-items: center;
+            width:100%;
+            
+        }
+        .post-pic-container {
+            height:45px;
+            width:45px;
+        }
+        .post-pic {
+            object-fit: cover;
+            height:100%;
+            width:100%;
+            border-radius: 50%;
+        }
+        .accordion-body{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            
+        }
+        .post-pic-name-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .post-artist-name {
+            margin-bottom:0px;
+            margin-left:1vw;
+        }
+        .snippit-container {
+            display:flex;
+            justify-content: center;
+            align-items: center;
+        }
+        @media (max-width: 1200px) {
+            audio {
+                width:20vw;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .card {
+                width:85vw;
+            }
+            h3 {
+                font-size:20px;
+            }
+            .button {
+                font-size: 12px;
+            }
+            
+            .profile-img-container {
+                width: 80px;
+                height:80px;
+                margin-right:2vw;
+                display:flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+        @media (max-width: 400px) {
+            .card {
+                width:95vw;
+            }
+            h3 {
+                font-size: 18px;
+            }
+            h6 {
+                font-size: 14px;
+            }
+            .button {
+                font-size: 12px;
+            }
+            .card-body {
+                padding-left:10px;
+                padding-right: 10px;
+            }
+        }
+        /* Custom styles for play button */
+        .play-button {
+            
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        a {
+            text-decoration: none;
+            color:black;
+        }
+        
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <div class='container-div'  style="margin-top:5vh; display:flex; justify-content:center;align-items:center">
+        <div class="card mb-3">
+            
+            <div class="card-header" style="display:flex;justify-content:space-between;align-items:center">
+                <div >
+                    <h3><b>{{user_object.username}}'s</b> Profile</h3>
+                    <h6>{{user_object.email}}</h6>
+                </div>
+                <form action="/follow" method="POST">
+                    {% csrf_token %}
+                    <input type='hidden' value="{{user_object.username}}" name='user'  >
+                    {%if user_object.username == user.username %}
+                    <a href="{% url 'settings' %}"><button type="button" class="btn btn-outline-secondary button" style="border-radius:10%;box-shadow:0 0 10px rgba(0,0,0,0.2);">Account Settings</button></a>
+                    {% else %}
+                    <button type="submit" class="btn btn-outline-secondary button" style="border-radius:10%;box-shadow:0 0 10px rgba(0,0,0,0.2);">{{button_text}}</button>
+                    {% endif %}
+                </form>
+            </div>
+            
+            <div class='card-body' >
+                <div class="profile-img-container">
+                    <img src="{{user_profile.profileimg}}" class="profile-img"   />
+                </div>
+                
+                <div class="bio-container">
+                    <h3>Bio</h3>
+                    <p>{{user_profile.bio}}</p>
+                </div>
+            </div>
+            
+            
+            <ul class="list-group list-group-flush">
+                <div class="accordion" id="accordionExample">
+                    {% for post in user_posts %}
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{post.id}}" aria-expanded="false" aria-controls="collapseOne">
+                            {{post.created_at|date:"F d, Y"}}
+                        </button>
+                      </h2>
+                      <div id="collapse-{{post.id}}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="post-pic-name-snippit">
+                                <div class="post-pic-name-container">
+                                    <div class="post-pic-container">
+                                        <img class="post-pic" src="{{post.post_img}}">
+                                    </div>
+                                    
+                                    <h3 class="post-artist-name">
+                                        <a class="text-info" href="{{post.link}}">{{post.song}}</a>
+                                        <small class="text-body-secondary"> by {{post.artist}}</small>
+                                    </h3>
+                                </div>
+                                
+                                <div class="snippit-container">
+                                    {% if post.snippit != "None" %}
+                                    <audio class="audio-snippit" id="myAudio-{{post.id}}">
+                                        <source src="{{post.snippit}}" type="audio/mpeg">
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                    <button id="playButton-{{post.id}}" class="play-button btn btn-primary" onclick="togglePlay('{{post.id}}')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+                                            <path id="playPath-{{post.id}}" d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
+                                        </svg>
+                                    </button>
+                                    {% else %}
+                                    
+                                    {% endif %}
+                                    
+                                    
+                                </div>
+                                
+                                
+                            </div>
+                            
+                          
+                        </div>
+                      </div>
+                      
+                    </div>
+                    {% endfor %}
+                    
+                </div>
+            </ul>
+            
+          </div>
+          
+
+    </div>
+
+
+
+{% endblock %}
+{% block script_stuff %}
+<script type="text/javascript">
+    const audios = document.querySelectorAll('.audio-snippit');
+
+    function togglePlay(postId) {
+        const playPath = document.getElementById('playPath-' + postId);
+        const playButton = document.getElementById('playButton-' + postId);
+        const audio = document.getElementById('myAudio-' + postId);
+        audio.volume = 0.20;
+
+        audios.forEach(otherAudio => {
+            if (otherAudio !== audio && !otherAudio.paused) {
+                otherAudio.pause();
+                const otherAudioId = otherAudio.id;
+                const otherPostId = otherAudioId.substring(otherAudioId.indexOf('-') + 1);
+                const otherPlayButton = document.getElementById('playButton-' + otherPostId);
+                const otherPlayPath = document.getElementById('playPath-' + otherPostId);
+                console.log(otherAudio.id);
+                if (otherPlayPath) {
+                    otherPlayPath.setAttribute('d', 'm11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393');
+                }
+                if (otherPlayButton) {
+                    otherPlayButton.classList.remove('bi-pause');
+                    otherPlayButton.classList.add('bi-play-fill');
+                }
+            }
+        });
+
+        if (audio.paused) {
+            audio.play();
+            if (playPath) {
+                playPath.setAttribute('d', 'M6 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5m4 0a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5');
+            }
+            if (playButton) {
+                playButton.classList.remove('bi-play-fill');
+                playButton.classList.add('bi-pause');
+            }
+        } else {
+            audio.pause();
+            if (playPath) {
+                playPath.setAttribute('d', 'm11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393');
+            }
+            if (playButton) {
+                playButton.classList.remove('bi-pause');
+                playButton.classList.add('bi-play-fill');
+            }
+        }
+
+        audio.onended = function() {
+            if (playPath) {
+                playPath.setAttribute('d', 'm11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393');
+            }
+            if (playButton) {
+                playButton.classList.remove('bi-pause');
+                playButton.classList.add('bi-play-fill');
+            }
+        };
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+
+{% block title %}Search - TuneLink{% endblock %}
+
+{% block head %}
+    <style>
+        a {
+            text-decoration: none;
+            color: blue; 
+           
+            
+            display: inline-block;
+            border-radius: 3px;
+        }
+        .card-header {
+            height:12vh;
+        }
+        .card {
+            margin-top:2vh;
+                
+
+        }
+        .card-header .profile-name-image h1 {
+            font-size: 30px;
+            margin:0;
+        }
+        .profile-name-image {
+            display:flex;
+            justify-content: space-between;
+            align-items: center;
+                
+        }
+        .profile-pic-container {
+            height:45px;
+            width:45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right:3vw;
+                
+        }
+        .profile-pic {
+            width:100%;
+            height:100%;
+            object-fit: cover;
+            box-shadow:0 0 10px rgba(0,0,0,0.3);
+            border-radius: 50%;
+        }
+        .pfp-container {
+            width:75px;
+            height:75px;
+        }
+        .pfp {
+            width:100%;
+            height:100%;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+        .follower-count-and-button {
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+        }
+        .follower-count-and-button div {
+            margin-top:1vh;
+
+        }
+        
+        .follower-count-and-button form button {
+            width:100%;
+
+        }
+        .follower-count {
+            color:rgb(173, 168, 168);
+        }
+        a {
+            text-decoration: none;
+            color:black;
+        }
+        @media (max-width: 475px) {
+            .profile-pic-container{
+                margin-right:5vw;
+            }
+            .profile-name-image {
+                 margin-right:1vw;
+                
+            }
+            .card-header .profile-name-image h1 {
+                font-size: 20px;
+                margin:0;
+            }
+            .profile-pic-container {
+                height:35px;
+                width:35px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-right:3vw;
+                
+            }
+            .audio-snippit {
+                width:75%;
+            }
+            .pfp-container {
+                width:50px;
+                height:50px;
+            }
+            .pfp {
+                width:100%;
+                height:100%;
+                object-fit: contain;
+                border-radius: 50%;
+            }
+            .like-wrapper {
+                width:10vw;
+            }
+            .card {
+                width:85vw;
+            }
+                
+                
+                
+        }
+        
+        @media (max-width: 380px) {
+            .profile-pic-container{
+                margin-right:5vw;
+            }
+            .profile-name-image {
+                margin-right:1vw;
+                
+            }
+            .card {
+                width:95vw;
+            }
+            .card-header .profile-name-image h1 {
+                font-size: 20px;
+                margin:0;
+            }
+            .profile-pic-container {
+                height:35px;
+                width:35px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-right:3vw;
+                
+            }
+            .like-wrapper {
+                width:13vw;
+            }
+            .pfp-container {
+            width:40px;
+            height:40px;
+            }
+            .pfp {
+                width:100%;
+                height:100%;
+                object-fit: contain;
+                border-radius: 50%;
+            }
+        }
+    </style>
+{% endblock %}
+
+
+{% block content%}
+    <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;flex:1;">
+        {% for user_object in usersearched_profiles %}
+            <div class="card mb-3" style="min-width:75vw">
+                <div class="card-header d-flex justify-content-between align-items-center" >
+                    <div class="profile-name-image">
+                        <div class='profile-pic-container'>
+                            <a href="/profile/{{user_object.profile.user.username}}"><img class='profile-pic' src="{{user_object.profile.profileimg}}"></a>
+                        </div>
+                        <a href="/profile/{{user_object.profile.user.username}}"><h1>{{user_object.profile.user.username}}</h1></a>
+                    </div>
+                    <div class="follower-count-and-button">
+                        
+                        <form  method="POST" action="follow" >
+                            {% csrf_token %}
+                            
+                            <input type='hidden' value="{{user_object.profile.user.username}}" name='user'>
+                            <button type="submit" class="btn btn-light" id="followTextElement-{{user.user.username}}">{{user_object.button_text}}</button>
+                                
+                        </form>
+                        <div>
+                            <h7 class="follower-count">{{user_object.follower_count}} Followers</h7>
+                        </div>
+                    </div>
+                    
+                    
+
+                </div>
+                    
+                
+            </div>
+        {% endfor %}
+        
+    </div>
+
+{% endblock %}
+
+
+

@@ -1,0 +1,556 @@
+{% extends "base.html" %}
+
+
+{% block title %}Sign Up - TuneLink{% endblock %}
+
+{% block head %}
+    <style>
+        .like-class {
+            margin-top:2vh;
+        }
+        .like-text {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        .like-text p {
+            margin:0px;
+            color:black;
+        }
+        .like-wrapper {
+            --gap: 0.5em;
+            --radius: 0.35em;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            
+            justify-content: center;
+            
+            --dot-color: black;
+            --dot-size: 0px;
+            --dot-space: 22px;
+            background: linear-gradient(
+                90deg,
+                var(--dot-bg) calc(var(--dot-space) - var(--dot-size)),
+                transparent 1%
+                )
+                center / var(--dot-space) var(--dot-space),
+            linear-gradient(
+                var(--dot-bg) calc(var(--dot-space) - var(--dot-size)),
+                transparent 1%
+                )
+                center / var(--dot-space) var(--dot-space),
+            var(--dot-color);
+            border: 0.1em solid #f1f1f1;
+            padding: 0.5em;
+            border-radius: var(--radius);
+            box-shadow: 0 0 1em 0.5em rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            width:5vw;
+            height:5vh;
+            min-width:120 px;
+            
+        }
+
+        .check[type="checkbox"] {
+        display: none;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            
+            margin-bottom: -0.25em;
+            width:80vw;
+            
+        }
+
+        .icon {
+            width: 3vh;
+            height: 3vh;
+            
+            fill: white;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .icon.active {
+            display: none;
+            fill: #f52121;
+        }
+
+        .check[type="checkbox"]:checked + .container .icon.active {
+            display: inline-block;
+            animation: wiggle 0.5s ease-in-out;
+        }
+
+        .check[type="checkbox"]:checked + .container .icon.inactive {
+            display: none;
+        }
+
+        .like-text {
+            margin-left: 0.5em;
+            padding: 0.5em;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-weight: bolder;
+        }
+
+
+        @keyframes wiggle {
+            0%,
+            100% {
+            transform: rotate(0deg);
+            }
+            25% {
+            transform: rotate(-10deg);
+            }
+            50% {
+            transform: rotate(10deg);
+            }
+            75% {
+            transform: rotate(-10deg);
+            }
+        }
+        a {
+            text-decoration: none;
+            color: blue; 
+
+            
+            display: inline-block;
+            border-radius: 3px;
+        }
+        .card-header {
+            height:12vh;
+        }
+        .card {
+            margin-top:2vh;
+                
+
+        }
+        .card-header .profile-name-image h1 {
+            font-size: 30px;
+            margin:0;
+        }
+        .profile-name-image {
+            display:flex;
+            justify-content: space-between;
+            align-items: center;
+                
+        }
+        .profile-pic-container {
+            height:45px;
+            width:45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right:3vw;
+                
+        }
+        .profile-pic {
+            width:100%;
+            height:100%;
+            object-fit: cover;
+            box-shadow:0 0 10px rgba(0,0,0,0.3);
+            border-radius: 50%;
+        }
+        .pfp-container {
+            width:75px;
+            height:75px;
+        }
+        .pfp {
+            width:100%;
+            height:100%;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+        @media (max-width: 475px) {
+            .profile-pic-container{
+                margin-right:5vw;
+            }
+            .profile-name-image {
+                margin-right:1vw;
+                
+            }
+            .card-header .profile-name-image h1 {
+                font-size: 20px;
+                margin:0;
+            }
+            .profile-pic-container {
+                height:35px;
+                width:35px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-right:3vw;
+                
+            }
+            .audio-snippit {
+                width:75%;
+            }
+            .pfp-container {
+                width:50px;
+                height:50px;
+            }
+            .pfp {
+                width:100%;
+                height:100%;
+                object-fit: contain;
+                border-radius: 50%;
+            }
+            .like-wrapper {
+                width:10vw;
+            }
+                
+                
+                
+        }
+
+        @media (max-width: 380px) {
+            .profile-pic-container{
+                margin-right:5vw;
+            }
+            .profile-name-image {
+                margin-right:1vw;
+                
+            }
+            .card-header .profile-name-image h1 {
+                font-size: 16px;
+                margin:0;
+            }
+            .profile-pic-container {
+                height:25px;
+                width:25px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-right:3vw;
+                
+            }
+            .like-wrapper {
+                width:13vw;
+            }
+            .pfp-container {
+            width:40px;
+            height:40px;
+            }
+            .pfp {
+                width:100%;
+                height:100%;
+                object-fit: contain;
+                border-radius: 50%;
+            }
+        }
+        .content-post-container {
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex:1;
+                
+        }
+        .post_column {
+            width:80vw;
+        }
+        .post {
+            width:75vw;
+        }
+        @media (max-width: 475px) {
+            .post {
+                width:90vw;
+            }
+                
+                
+                
+        }
+        .card-header {
+            height:10vh;
+        }
+        .model-body {
+            padding-top:none;
+            margin-top:0px;
+        }
+        .button-liked {
+            color:white;
+        }
+        .button-notliked {
+            color:#D70040;
+        }
+        .liked {
+            fill:#D70040;
+        }
+        .notliked {
+            fill:white;
+        }
+        a {
+            text-decoration: none;
+            color:black;
+            font-weight: bold;
+        }
+        .date-created p {
+            margin-top:1vh;
+        }
+        .error-messages {
+            width:100%;
+            margin-top: 3vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+{% endblock %}
+
+{% block nav_post %}
+    <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="modal" data-bs-target="#myModal" >Post</a>
+    </li>
+
+{% endblock %}
+
+{% block content %}
+    
+    <div class='error-messages'>
+        <style>
+            h5{
+                color: red;
+            }
+            
+        </style>
+        {% for message in messages %}
+            <h5>{{message}}</h5>
+        {% endfor %}
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form method="POST" action="{% url 'upload'%}">
+                    {% csrf_token %}
+                    <div class="modal-header" --bs-modal-header-padding="none" style="padding-bottom:0;">
+                        <h1 class="modal-title fs-5" id="modalLabel" style="margin:none;">Link A Tune</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="margin:none;"></button>
+                        
+                    </div>
+                    <hr>
+                    
+                    <div class="modal-body" >
+                        <div style="padding-top:-5%;margin:0px;">
+                            <label class="col-form-label mt-4" for="inputArtist" style="padding:0;margin-top:0;">Artist</label>
+                            <input type="text" name='artist' class="form-control" placeholder="Enter Artist Name" id="inputArtist">
+                        </div>
+                        <div>
+                            <label class="col-form-label mt-4" for="inputSong">Song</label>
+                            <input type="text" name='song' class="form-control" placeholder="Enter Song Name" id="inputSong">
+                        </div>
+                        <div>
+                            <label style="margin-top:2vh;" class="col-form-label mt-4" for="caption">Caption</label>
+                            <textarea id='caption' style="background-color:white;border-radius:3px;border-color:#d3d3d3;border:.5px solid #ccc;box-shadow:0 4px 10px rgba(0,0,0,0.1);width:100%" name="caption" placeholder="Caption..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Post</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+        
+    {% if user_following_list %}
+        <div class="container" style="flex:1">
+            <div class="content-post-container">
+                {% for post in posts %}
+                <div class="d-flex justify-content-center align-items-center post-column"  >
+                    <div class="card bg-light post">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <a style = "text-decoration:none;color:black;font-weight:bold" href="/profile/{{post.post.user}}">@{{post.post.user}}</a>
+                            {% if post.post.user != user.username %}
+                            <form action="/follow" method="POST">
+                                {% csrf_token %}
+                                <input type='hidden' value="{{post.post.user}}" name='user'  >
+                                <button type="submit" class="btn btn-outline-secondary" style="border-radius:10%;box-shadow:0 0 10px rgba(0,0,0,0.2);">Unfollow</button>
+                                    
+                            </form>
+                            {%else%}
+                            {%endif%}
+                        </div>
+                        <div class="card-body">
+                            <h3>
+                                <a class="text-info-emphasis" href="{{post.post.link}}">{{post.post.song}}</a>
+                                <small class="text-body-secondary"> by {{post.post.artist}}</small>
+                            </h3>
+                            <div class="d-flex justify-content-between align-items-center" style="width: 100%;">
+                                {% if post.post.snippit != "None" %}
+                                <audio id class="audio-snippit" controls controlList="nodownload" style="background-color: #f1f1f1;" volume="0.0">
+                                    <source src="{{post.post.snippit}}" type="audio/mpeg">
+                                    Your browser does not support the audio element.
+                                </audio>
+                                {% else %}
+                                <h4 class='text-info'>No snippit ;P</h4>
+                                {% endif %}
+                                <div class="pfp-container">
+                                    <img src="{{post.post.post_img}}"  class="pfp"/>
+                                </div>
+                                
+                                
+
+                            </div>
+                                
+
+                            <p style="padding:5px;margin-top:2vh;margin-bottom:0;min-height:7vh;background-color:#f1f1f1;border-radius:3px;border-color:#d3d3d3;box-shadow:0 4px 10px rgba(0,0,0,0.1);" class="card-text">{{post.post.caption}}</p>
+                            <form method="POST" id="like-form" data-post-id="{{post.post.id}}">
+                                {% csrf_token %}
+                                <div class="d-flex justify-content-left align-items-center like-class">
+                                    {% if post.is_liked %}
+                                    <button  class="like-wrapper button-liked" id="likedOrNot-{{post.post.id}}" type='submit'>
+                                        <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="blue" class="bi bi-heart icon" viewBox="0 0 16 16">
+                                            <path class="liked"  id="heartPath-{{post.post.id}}" d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                                        </svg>
+                                    </button>
+                                    {% else %}
+                                    <button style="background-color:#D70040;" class="like-wrapper button-notliked" id="likedOrNot-{{post.post.id}}" type='submit'>
+                                        <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="blue" class="bi bi-heart icon" viewBox="0 0 16 16">
+                                            <path class="notliked"  id="heartPath-{{post.post.id}}" d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                                        </svg>
+                                    </button>
+                                    {%endif%}
+                                    <div  id="like-count-{{post.post.id}}" class="like-text">
+                                        
+                                        {% if post.post.no_of_likes == 0 %}
+                                        <p>No likes</p>
+                                        {% elif post.no_of_likes == 1 %}
+                                        <p>Liked by {{post.post.no_of_likes}} person</p>
+                                        {% else %}
+                                        <p>Liked by {{post.post.no_of_likes}} people</p>
+                                        {% endif %}
+                                        
+                                    </div>
+                                </div>
+                                    
+                            </form> 
+
+                                
+                                
+                            <small class="text-body-secondary date-created"><p>{{post.post.created_at}}</p></small>
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>    
+    {% else %}
+        <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;flex:1;">
+            {% for s_user in suggested_users %}
+                <div class="card mb-3" style="min-width:75vw">
+                    <div class="card-header d-flex justify-content-between align-items-center" >
+                        <div class="profile-name-image">
+                            <div class='profile-pic-container'>
+                                <img class='profile-pic' src="{{s_user.profileimg}}">
+                            </div>
+                            <h1>{{s_user.user.username}}</h1>
+                        </div>
+                        <form  method="POST" id="first-follow-form" data-user-username="{{s_user.user.username}}">
+                            {% csrf_token %}
+                            <input type='hidden' value="{{s_user.user.username}}" name='suggested_user'>
+                            <button type="submit" class="btn btn-light" id="followTextElement-{{s_user.user.username}}">Follow</button>
+                                
+                        </form>
+                        
+
+                    </div>
+                        
+                    
+                </div>
+            {% endfor %}
+            <div>
+                <h6>New Friends? See your <a href="/">Feed</a></h4>
+            </div>
+        </div>
+
+    {% endif %}
+            
+        
+    </div>
+
+{% endblock %}
+{% block script_stuff%}
+    <script type='text/javascript'>
+        document.addEventListener('DOMContentLoaded', function() {
+            const audios = document.querySelectorAll('.audio-snippit');
+            
+            audios.forEach(audio=>{
+                audio.volume = 0.2;
+            });
+            audios.forEach(audio => {
+                audio.addEventListener('play', function() {
+                    audios.forEach(otherAudio => {
+                        if (otherAudio !== audio && !otherAudio.paused) {
+                            otherAudio.pause();
+                        }
+                    });
+                });
+            });
+        });
+        
+        $(document).on('submit','#like-form',function(e){
+            e.preventDefault();
+            var post_id = $(this).data('post-id')
+            $.ajax({
+                type:'POST',
+                url:"/like-post?post_id="+post_id,
+                data:{
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success: function(response){
+                    var likeCountElement = $('#like-count-'+post_id);
+                    var newLikeCount = response.new_likes;
+                    var heartPath = document.getElementById('heartPath-' + post_id);
+                    var likeButton = document.getElementById('likedOrNot-' +post_id);
+
+                    if (newLikeCount == 0){
+                        likeCountElement.html('<p>No Likes</p>');
+                    } else if (newLikeCount == 1){
+                        likeCountElement.html('<p>Liked by 1 person</p>');
+                    } else {
+                        likeCountElement.html('<p>Liked by '+ newLikeCount + ' people</p>');
+                    }
+                    if (response.user_liked) {
+                        heartPath.style.fill = "#D70040";
+                        likeButton.style.backgroundColor = "white";
+                    } else {
+                        heartPath.style.fill = "white";
+                        likeButton.style.backgroundColor = "#D70040";
+                    }
+                },
+            });
+        });
+        $(document).on('submit','#first-follow-form',function(e){
+            e.preventDefault();
+            var username = $(this).data('user-username')
+            
+            $.ajax({
+                type:"POST",
+                url:"/first-follow",
+                data:{
+                    suggested_user: username,
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success: function(response){
+                    var followElement = $('#followTextElement-'+username);
+                    var followText = response.follow_text;
+                    
+                    if (followText === "Follow"){
+                        followElement.html("Follow");
+                    } else {
+                        followElement.html("UnFollow");
+                    }
+                },
+            });
+        });
+    </script>
+{% endblock %}
